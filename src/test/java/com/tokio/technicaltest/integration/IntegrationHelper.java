@@ -10,4 +10,7 @@ public interface IntegrationHelper {
             "values ('0f373186-17fe-4984-8780-f5c423955461', 1000, 10001, '100.00', '2024-01-25', '2024-01-25', 0," +
             "1), ('0f373186-17fe-4984-8780-f5c423955462', 1000, 1002, '200.00', '2024-01-26', '2024-01-25', 0, 2);";
 
+
+    String QUERY_DELETE_SCHEDULES = "delete from scheduling;";
+
 }

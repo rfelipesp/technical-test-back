@@ -28,7 +28,7 @@ public class SchedulePersistenceService implements SchedulePersistencePort {
     public List<Scheduling> retrieveAllSchedules() throws IllegalStateException {
 
         final var start = now();
-        log.info("status={}",STARTED);
+        log.info("status={}", STARTED);
 
         List<SchedulingEntity> schedules;
 
@@ -41,6 +41,29 @@ public class SchedulePersistenceService implements SchedulePersistencePort {
 
         log.info("status={}, timeMillis={} ", FINISHED, start.until(now(), MILLIS));
         return schedules.stream().map(SchedulingEntityMapper::fromSchedulingEntityToSchedule).toList();
+
+    }
+
+    @Override
+    public Scheduling saveScheduling(Scheduling scheduling) {
+
+        final var start = now();
+        log.info("status={}", STARTED);
+
+        SchedulingEntity schedulingPersisted;
+
+        try {
+
+            schedulingPersisted = schedulingRepository.saveAndFlush(
+                    SchedulingEntityMapper.fromSchedulingToScheduleEntity(scheduling));
+
+        } catch (Exception exception) {
+            log.error("status={}, timeMillis={} ", FAILED, start.until(now(), MILLIS));
+            throw new IllegalStateException(exception.getMessage());
+        }
+
+        log.info("status={}, timeMillis={} ", FINISHED, start.until(now(), MILLIS));
+        return SchedulingEntityMapper.fromSchedulingEntityToSchedule(schedulingPersisted);
 
     }
 

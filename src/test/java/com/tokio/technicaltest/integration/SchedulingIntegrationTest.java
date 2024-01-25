@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.Objects;
 
+import static com.tokio.technicaltest.integration.IntegrationHelper.QUERY_DELETE_SCHEDULES;
 import static com.tokio.technicaltest.integration.IntegrationHelper.QUERY_INSERT_SCHEDULES;
 
 @SpringBootTest
@@ -23,6 +24,7 @@ public class SchedulingIntegrationTest {
     @Test
     void whenRequestGetSchedules_thenReturnAllSchedules() {
 
+        truncateData();
         insertSchedules();
 
         var response = schedulingController.findSchedules();
@@ -35,11 +37,17 @@ public class SchedulingIntegrationTest {
     @Test
     void whenRequestGetSchedules_AndHasEmpty_thenReturnNoReturnSchedules() {
 
+        truncateData();
+
         var response = schedulingController.findSchedules();
 
         Assertions.assertEquals(200, response.getStatusCode().value());
         Assertions.assertEquals(0, Objects.requireNonNull(response.getBody()).getData().size());
 
+    }
+
+    private void truncateData() {
+        jdbcTemplate.update(QUERY_DELETE_SCHEDULES);
     }
 
     private void insertSchedules() {

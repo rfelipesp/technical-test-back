@@ -1,5 +1,6 @@
 package com.tokio.technicaltest.app.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,13 +26,14 @@ public class SchedulingRequestAndResponse {
     @NotNull
     private BigDecimal transferAmount;
 
-    @NotNull
     private BigDecimal transferRate;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate transferDate;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate schedulingDate;
 
 }

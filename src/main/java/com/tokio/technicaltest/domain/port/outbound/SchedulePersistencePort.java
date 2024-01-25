@@ -8,4 +8,5 @@ public interface SchedulePersistencePort {
 
     List<Scheduling> retrieveAllSchedules();
 
+    Scheduling saveScheduling(Scheduling scheduling);
 }

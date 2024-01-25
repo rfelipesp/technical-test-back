@@ -22,6 +22,7 @@ public class SchedulingEntity implements Serializable {
     private static final long serialVersionUID = -4232064991552198460L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
     @NotNull
