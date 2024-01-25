@@ -1,12 +1,8 @@
 package com.tokio.technicaltest.infra.db.entity;
 
 import com.tokio.technicaltest.domain.utils.TransferStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,12 +37,9 @@ public class SchedulingEntity implements Serializable {
     private BigDecimal transferAmount;
 
     @NotNull
-    @Column(name = "transfer_rate")
-    private BigDecimal transferRate;
-
-    @NotNull
     @Column(name = "transfer_date")
     private LocalDate transferDate;
+
 
     @NotNull
     @Column(name = "scheduling_date")
@@ -55,5 +48,11 @@ public class SchedulingEntity implements Serializable {
     @NotNull
     @Column(name = "transfer_status")
     private TransferStatus transferStatus;
+
+    @ManyToOne
+    @JoinColumn(name="id", nullable=false)
+    private TransferRate transferRate;
+
+
 
 }

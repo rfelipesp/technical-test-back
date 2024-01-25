@@ -24,7 +24,7 @@ public class SchedulingEntityMapper {
             schedulingEntity.setOriginAccount(scheduling.getOriginAccount());
             schedulingEntity.setDestinationAccount(scheduling.getOriginAccount());
             schedulingEntity.setTransferAmount(scheduling.getTransferAmount());
-            schedulingEntity.setTransferRate(scheduling.getTransferRate());
+//            schedulingEntity.setTransferRate(scheduling.getTransferRate());
             schedulingEntity.setTransferDate(scheduling.getTransferDate());
             schedulingEntity.setSchedulingDate(scheduling.getSchedulingDate());
             schedulingEntity.setTransferStatus(scheduling.getTransferStatus());
@@ -45,7 +45,7 @@ public class SchedulingEntityMapper {
                 .originAccount(schedulingEntity.getOriginAccount())
                 .destinationAccount(schedulingEntity.getDestinationAccount())
                 .transferAmount(schedulingEntity.getTransferAmount())
-                .transferRate(schedulingEntity.getTransferRate())
+//                .transferRate(schedulingEntity.getTransferRate())
                 .transferDate(schedulingEntity.getTransferDate())
                 .schedulingDate(schedulingEntity.getSchedulingDate())
                 .build();
