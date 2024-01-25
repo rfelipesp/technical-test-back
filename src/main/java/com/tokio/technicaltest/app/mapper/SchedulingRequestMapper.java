@@ -22,7 +22,6 @@ public class SchedulingRequestMapper {
                     .originAccount(scheduling.getOriginAccount())
                     .destinationAccount(scheduling.getDestinationAccount())
                     .transferAmount(scheduling.getTransferAmount())
-                    .transferRate(scheduling.getTransferRate())
                     .transferDate(scheduling.getTransferDate())
                     .schedulingDate(scheduling.getSchedulingDate())
                     .build();
@@ -32,7 +31,6 @@ public class SchedulingRequestMapper {
                     .originAccount(scheduling.getOriginAccount())
                     .destinationAccount(scheduling.getDestinationAccount())
                     .transferAmount(scheduling.getTransferAmount())
-                    .transferRate(scheduling.getTransferRate())
                     .transferDate(scheduling.getTransferDate())
                     .schedulingDate(scheduling.getSchedulingDate())
                     .build();
@@ -51,7 +49,7 @@ public class SchedulingRequestMapper {
                 .originAccount(scheduling.getOriginAccount())
                 .destinationAccount(scheduling.getDestinationAccount())
                 .transferAmount(scheduling.getTransferAmount())
-                .transferRate(scheduling.getTransferRate())
+                .transferRate(scheduling.getTransferRate().getTransferRate())
                 .transferDate(scheduling.getTransferDate())
                 .schedulingDate(scheduling.getSchedulingDate())
                 .build();

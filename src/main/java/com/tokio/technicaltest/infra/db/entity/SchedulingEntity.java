@@ -50,7 +50,7 @@ public class SchedulingEntity implements Serializable {
     private TransferStatus transferStatus;
 
     @ManyToOne
-    @JoinColumn(name="id", nullable=false)
+    @JoinColumn(name="transfer_rate_id", nullable=false)
     private TransferRateEntity transferRateEntity;
 
 

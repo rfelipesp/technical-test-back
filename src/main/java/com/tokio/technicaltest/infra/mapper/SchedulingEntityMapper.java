@@ -1,6 +1,7 @@
 package com.tokio.technicaltest.infra.mapper;
 
 import com.tokio.technicaltest.domain.model.Scheduling;
+import com.tokio.technicaltest.domain.model.TransferRate;
 import com.tokio.technicaltest.infra.db.entity.SchedulingEntity;
 
 import java.util.Objects;
@@ -40,14 +41,23 @@ public class SchedulingEntityMapper {
             return Scheduling.builder().build();
         }
 
+        var transferRate = TransferRate.builder()
+                .id(schedulingEntity.getTransferRateEntity().getId())
+                .fromDay(schedulingEntity.getTransferRateEntity().getFromDay())
+                .untilDay(schedulingEntity.getTransferRateEntity().getUntilDay())
+                .transferRate(schedulingEntity.getTransferRateEntity().getTransferRate())
+                .status(schedulingEntity.getTransferRateEntity().isStatus())
+                .build();
+
         return Scheduling.builder()
                 .uuid(schedulingEntity.getUuid())
                 .originAccount(schedulingEntity.getOriginAccount())
                 .destinationAccount(schedulingEntity.getDestinationAccount())
                 .transferAmount(schedulingEntity.getTransferAmount())
-//                .transferRate(schedulingEntity.getTransferRate())
+                .transferRate(transferRate)
                 .transferDate(schedulingEntity.getTransferDate())
                 .schedulingDate(schedulingEntity.getSchedulingDate())
+                .transferStatus(schedulingEntity.getTransferStatus())
                 .build();
 
     }

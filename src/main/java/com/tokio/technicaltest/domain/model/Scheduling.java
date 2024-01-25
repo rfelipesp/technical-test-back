@@ -18,7 +18,7 @@ public class Scheduling {
     private Long originAccount;
     private Long destinationAccount;
     private BigDecimal transferAmount;
-    private BigDecimal transferRate;
+    private TransferRate transferRate;
     private LocalDate transferDate;
     private LocalDate schedulingDate;
     private TransferStatus transferStatus;
