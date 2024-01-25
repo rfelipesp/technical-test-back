@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "transfer_rate")
-public class TransferRate {
+public class TransferRateEntity {
 
     @Id
     private Long id;

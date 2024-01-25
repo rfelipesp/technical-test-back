@@ -51,7 +51,7 @@ public class SchedulingEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="id", nullable=false)
-    private TransferRate transferRate;
+    private TransferRateEntity transferRateEntity;
 
 
 

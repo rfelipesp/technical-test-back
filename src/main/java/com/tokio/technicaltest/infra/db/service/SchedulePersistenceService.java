@@ -25,7 +25,7 @@ public class SchedulePersistenceService implements SchedulePersistencePort {
     }
 
     @Override
-    public List<Scheduling> retrieveAllSchedules() {
+    public List<Scheduling> retrieveAllSchedules() throws IllegalStateException {
 
         final var start = now();
         log.info("status={}",STARTED);
@@ -36,7 +36,7 @@ public class SchedulePersistenceService implements SchedulePersistencePort {
             schedules = schedulingRepository.findAll();
         } catch (Exception exception) {
             log.error("status={}, timeMillis={} ", FAILED, start.until(now(), MILLIS));
-            return null;
+            throw new IllegalStateException(exception.getMessage());
         }
 
         log.info("status={}, timeMillis={} ", FINISHED, start.until(now(), MILLIS));
