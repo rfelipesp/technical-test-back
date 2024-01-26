@@ -67,6 +67,24 @@ public class SchedulingIntegrationTest {
 
     }
 
+    @Test
+    void giveAnValidRequest_whenProcessNotValidSchedulePeriod_thenNoCreateScheduling() throws IOException {
+
+        truncateData();
+
+        var request = FixtureUtils.readObjectFromFile(
+                "fixtures", "valid-scheduling-request.json", SchedulingRequestAndResponse.class);
+
+        request.setTransferDate(LocalDate.now().plusDays(100));
+
+        var response = schedulingController.createScheduling(request);
+
+        Assertions.assertEquals(200, response.getStatusCode().value());
+        Assertions.assertEquals("Invalid scheduling period", Objects.requireNonNull(response.getBody()).getMessage());
+        Assertions.assertEquals(0, Objects.requireNonNull(response.getBody()).getData().size());
+
+    }
+
     private void truncateData() {
         jdbcTemplate.update(QUERY_DELETE_SCHEDULES);
     }

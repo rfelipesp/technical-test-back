@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class SchedulingService implements SchedulingInboundPort {
@@ -45,5 +46,14 @@ public class SchedulingService implements SchedulingInboundPort {
         scheduling.setTransferStatus(TransferStatus.SCHEDULED);
         return schedulePersistencePort.saveScheduling(scheduling);
 
+    }
+
+    @Transactional
+    @Override
+    public void deleteScheduling(UUID uuid) {
+
+        var scheduling = schedulePersistencePort.retrieveSchedulingById(uuid);
+        scheduling.setTransferStatus(TransferStatus.CANCELED);
+        schedulePersistencePort.deleteScheduling(scheduling);
     }
 }

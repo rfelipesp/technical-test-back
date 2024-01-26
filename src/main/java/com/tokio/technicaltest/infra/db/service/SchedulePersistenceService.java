@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.tokio.technicaltest.domain.utils.LogUtils.*;
 import static java.time.Instant.now;
@@ -45,7 +46,31 @@ public class SchedulePersistenceService implements SchedulePersistencePort {
     }
 
     @Override
-    public Scheduling saveScheduling(Scheduling scheduling) {
+    public Scheduling retrieveSchedulingById(UUID uuid) throws IllegalStateException {
+
+        final var start = now();
+        log.info("status={}", STARTED);
+
+        try {
+
+            var optionalSchedule = schedulingRepository.findById(uuid);
+
+            if (optionalSchedule.isEmpty()) {
+                throw new IllegalStateException("Scheduling not found");
+            }
+
+            log.info("status={}, timeMillis={} ", FINISHED, start.until(now(), MILLIS));
+            return SchedulingEntityMapper.fromSchedulingEntityToSchedule(optionalSchedule.get());
+
+        } catch (Exception exception) {
+            log.error("status={}, timeMillis={} ", FAILED, start.until(now(), MILLIS));
+            throw new IllegalStateException(exception.getMessage());
+        }
+
+    }
+
+    @Override
+    public Scheduling saveScheduling(Scheduling scheduling) throws IllegalStateException {
 
         final var start = now();
         log.info("status={}", STARTED);
@@ -64,6 +89,23 @@ public class SchedulePersistenceService implements SchedulePersistencePort {
 
         log.info("status={}, timeMillis={} ", FINISHED, start.until(now(), MILLIS));
         return SchedulingEntityMapper.fromSchedulingEntityToSchedule(schedulingPersisted);
+
+    }
+
+    @Override
+    public void deleteScheduling(Scheduling scheduling) throws IllegalStateException {
+
+        final var start = now();
+        log.info("status={}", STARTED);
+
+        try {
+
+            schedulingRepository.saveAndFlush(SchedulingEntityMapper.fromSchedulingToScheduleEntity(scheduling));
+
+        } catch (Exception exception) {
+            log.error("status={}, timeMillis={} ", FAILED, start.until(now(), MILLIS));
+            throw new IllegalStateException(exception.getMessage());
+        }
 
     }
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import static com.tokio.technicaltest.domain.utils.LogUtils.*;
 import static java.time.Instant.now;
@@ -88,6 +89,31 @@ public class SchedulingController {
 
             log.error("status={}, cause={}, timeMillis={}", FAILED, exception.getMessage(), start.until(now(), MILLIS));
             return new ResponseEntity<>(response.ofError("Some problem when try save scheduling"), HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
+    @DeleteMapping(value = "/{uuid}")
+    public ResponseEntity<ApiResponse<SchedulingRequestAndResponse>> deleteScheduling(
+            @PathVariable final UUID uuid) {
+
+        final var start = now();
+        log.info("status={}", STARTED);
+
+        Response<SchedulingRequestAndResponse> response = new Response<>();
+
+        try {
+
+            schedulingInboundPort.deleteScheduling(uuid);
+
+            log.info("status={}, timeMillis={} ", FINISHED, start.until(now(), MILLIS));
+            return new ResponseEntity<>(response.ofSuccess(List.of(), "Scheduling canceled with success"), HttpStatus.OK);
+
+        } catch (Exception exception) {
+
+            log.error("status={}, cause={}, timeMillis={}", FAILED, exception.getMessage(), start.until(now(), MILLIS));
+            return new ResponseEntity<>(response.ofError("Some problem when try to cancel scheduling"), HttpStatus.BAD_REQUEST);
 
         }
 
