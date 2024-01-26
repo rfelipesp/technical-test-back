@@ -2,7 +2,6 @@ package com.tokio.technicaltest.app.controller;
 
 import com.tokio.technicaltest.app.commons.utils.ApiResponse;
 import com.tokio.technicaltest.app.commons.utils.Response;
-import com.tokio.technicaltest.app.commons.validator.FieldsValidator;
 import com.tokio.technicaltest.app.dto.SchedulingRequestAndResponse;
 import com.tokio.technicaltest.app.mapper.SchedulingRequestMapper;
 import com.tokio.technicaltest.domain.port.inbound.SchedulingInboundPort;
@@ -27,11 +26,9 @@ import static java.time.temporal.ChronoUnit.MILLIS;
 public class SchedulingController {
 
     private final SchedulingInboundPort schedulingInboundPort;
-    private final FieldsValidator fieldsValidator;
 
-    public SchedulingController(SchedulingInboundPort schedulingInboundPort, FieldsValidator fieldsValidator) {
+    public SchedulingController(SchedulingInboundPort schedulingInboundPort) {
         this.schedulingInboundPort = schedulingInboundPort;
-        this.fieldsValidator = fieldsValidator;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -44,9 +41,7 @@ public class SchedulingController {
 
         try {
 
-            var schedules = schedulingInboundPort.findSchedules().stream()
-                    .map(SchedulingRequestMapper::fromSchedulingToScheduleResponse)
-                    .toList();
+            var schedules = schedulingInboundPort.findSchedules().stream().map(SchedulingRequestMapper::fromSchedulingToScheduleResponse).toList();
 
             if (schedules.isEmpty()) {
                 log.info("status={}, timeMillis={} ", FINISHED, start.until(now(), MILLIS));
@@ -65,8 +60,7 @@ public class SchedulingController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<SchedulingRequestAndResponse>> createScheduling(
-            @Valid @RequestBody final SchedulingRequestAndResponse scheduling) {
+    public ResponseEntity<ApiResponse<SchedulingRequestAndResponse>> createScheduling(@Valid @RequestBody final SchedulingRequestAndResponse scheduling) {
 
         final var start = now();
         log.info("status={}", STARTED);
@@ -75,8 +69,7 @@ public class SchedulingController {
 
         try {
 
-            var schedulingPersisted = schedulingInboundPort.saveScheduling(
-                    SchedulingRequestMapper.fromSchedulingRequestToScheduling(scheduling));
+            var schedulingPersisted = schedulingInboundPort.saveScheduling(SchedulingRequestMapper.fromSchedulingRequestToScheduling(scheduling));
 
             if (Objects.isNull(schedulingPersisted.getUuid())) {
                 log.info("status={}, timeMillis={} ", FINISHED, start.until(now(), MILLIS));
@@ -98,8 +91,7 @@ public class SchedulingController {
     }
 
     @DeleteMapping(value = "/{uuid}")
-    public ResponseEntity<ApiResponse<SchedulingRequestAndResponse>> deleteScheduling(
-            @PathVariable final UUID uuid) {
+    public ResponseEntity<ApiResponse<SchedulingRequestAndResponse>> deleteScheduling(@PathVariable final UUID uuid) {
 
         final var start = now();
         log.info("status={}", STARTED);
