@@ -11,6 +11,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -72,5 +73,46 @@ public class SchedulingApiTest {
                 .statusCode(400);
 
     }
+
+    @Test
+    void giveAnValidRequest_whenProcessSchedules_thenReturnSuccess() {
+
+        var request = MainHelper.buildSchedulingRequest();
+
+        when(schedulingInboundPortMock.saveScheduling(any())).thenReturn(MainHelper.buildScheduling());
+
+        given()
+                .port(port)
+                .contentType("application/json")
+                .body(request)
+                .when()
+                .post("/tokio/scheduler")
+                .then()
+                .body("message", equalTo("Success"))
+                .body("data.size()", equalTo(1))
+                .statusCode(200);
+
+    }
+
+//    @Test
+//    void giveAnInValidRequest_whenProcessSchedules_thenReturnSuccess() {
+//
+//        var request = MainHelper.buildSchedulingRequest();
+//        request.setTransferDate(null);
+//
+//        when(schedulingInboundPortMock.saveScheduling(any())).thenReturn(MainHelper.buildScheduling());
+//
+//        given()
+//                .port(port)
+//                .contentType("application/json")
+//                .body(request)
+//                .when()
+//                .post("/tokio/scheduler")
+//                .then()
+//                .body("message", equalTo("Some problem when try save scheduling"))
+//                .body("data.size()", equalTo(0))
+//                .statusCode(200);
+//
+//    }
 
 }

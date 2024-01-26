@@ -1,12 +1,16 @@
 package com.tokio.technicaltest.integration;
 
+import com.tokio.technicaltest.FixtureUtils;
 import com.tokio.technicaltest.app.controller.SchedulingController;
+import com.tokio.technicaltest.app.dto.SchedulingRequestAndResponse;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import static com.tokio.technicaltest.integration.IntegrationHelper.QUERY_DELETE_SCHEDULES;
@@ -43,6 +47,23 @@ public class SchedulingIntegrationTest {
 
         Assertions.assertEquals(200, response.getStatusCode().value());
         Assertions.assertEquals(0, Objects.requireNonNull(response.getBody()).getData().size());
+
+    }
+
+    @Test
+    void giveAnValidRequest_whenProcessSaveSchedules_thenReturnSuccess() throws IOException {
+
+        truncateData();
+
+        var request = FixtureUtils.readObjectFromFile(
+                "fixtures", "valid-scheduling-request.json", SchedulingRequestAndResponse.class);
+
+        request.setTransferDate(LocalDate.now().plusDays(5));
+
+        var response = schedulingController.createScheduling(request);
+
+        Assertions.assertEquals(200, response.getStatusCode().value());
+        Assertions.assertEquals(1, Objects.requireNonNull(response.getBody()).getData().size());
 
     }
 

@@ -1,5 +1,6 @@
 package com.tokio.technicaltest;
 
+import com.tokio.technicaltest.app.dto.SchedulingRequestAndResponse;
 import com.tokio.technicaltest.domain.model.Scheduling;
 import com.tokio.technicaltest.domain.model.TransferRate;
 
@@ -27,6 +28,17 @@ public interface MainHelper {
                 .transferRate(transferRate)
                 .transferDate(LocalDate.of(2024, 1, 25))
                 .schedulingDate(LocalDate.of(2024, 1, 25))
+                .build();
+    }
+
+    static SchedulingRequestAndResponse buildSchedulingRequest(){
+
+        return SchedulingRequestAndResponse.builder()
+                .uuid(UUID.fromString("f93bd959-2e22-40f3-8483-86f3c0dd6d4f"))
+                .originAccount(1000L)
+                .destinationAccount(1001L)
+                .transferAmount(new BigDecimal("100.00"))
+                .transferDate(LocalDate.now())
                 .build();
     }
 

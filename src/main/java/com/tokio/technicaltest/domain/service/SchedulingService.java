@@ -32,7 +32,8 @@ public class SchedulingService implements SchedulingInboundPort {
     @Override
     public Scheduling saveScheduling(Scheduling scheduling) {
 
-        var period = scheduling.getSchedulingDate().getDayOfYear() - LocalDate.now().getDayOfYear();
+        var today = LocalDate.now();
+        var period = scheduling.getTransferDate().getDayOfYear() - today.getDayOfYear();
         var transferRate = transferRateService.retrieveTransferRateByPeriod(period);
 
         if (Objects.isNull(transferRate.getId())) {
@@ -40,6 +41,7 @@ public class SchedulingService implements SchedulingInboundPort {
         }
 
         scheduling.setTransferRate(transferRate);
+        scheduling.setSchedulingDate(today);
         scheduling.setTransferStatus(TransferStatus.SCHEDULED);
         return schedulePersistencePort.saveScheduling(scheduling);
 

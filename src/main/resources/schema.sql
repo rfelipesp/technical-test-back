@@ -1,3 +1,4 @@
+drop table if exists scheduling;
 drop table if exists transfer_rate;
 
 create table if not exists transfer_rate
@@ -9,8 +10,6 @@ create table if not exists transfer_rate
     status        boolean,
     primary key (id)
 );
-
-drop table if exists scheduling;
 
 create table if not exists scheduling
 (

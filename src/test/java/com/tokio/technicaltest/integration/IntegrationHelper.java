@@ -13,4 +13,6 @@ public interface IntegrationHelper {
 
     String QUERY_DELETE_SCHEDULES = "delete from scheduling;";
 
+
+
 }

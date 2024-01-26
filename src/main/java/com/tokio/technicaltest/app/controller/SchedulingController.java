@@ -87,7 +87,7 @@ public class SchedulingController {
         } catch (Exception exception) {
 
             log.error("status={}, cause={}, timeMillis={}", FAILED, exception.getMessage(), start.until(now(), MILLIS));
-            return new ResponseEntity<>(response.ofError("Some Problem when try save Scheduling"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response.ofError("Some problem when try save scheduling"), HttpStatus.BAD_REQUEST);
 
         }
 
