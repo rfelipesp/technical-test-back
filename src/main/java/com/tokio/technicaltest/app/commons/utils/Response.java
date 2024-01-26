@@ -1,4 +1,4 @@
-package com.tokio.technicaltest.app.utils;
+package com.tokio.technicaltest.app.commons.utils;
 
 import java.util.List;
 

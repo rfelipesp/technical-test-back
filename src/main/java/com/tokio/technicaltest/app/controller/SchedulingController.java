@@ -1,9 +1,10 @@
 package com.tokio.technicaltest.app.controller;
 
+import com.tokio.technicaltest.app.commons.utils.ApiResponse;
+import com.tokio.technicaltest.app.commons.utils.Response;
+import com.tokio.technicaltest.app.commons.validator.FieldsValidator;
 import com.tokio.technicaltest.app.dto.SchedulingRequestAndResponse;
 import com.tokio.technicaltest.app.mapper.SchedulingRequestMapper;
-import com.tokio.technicaltest.app.utils.ApiResponse;
-import com.tokio.technicaltest.app.utils.Response;
 import com.tokio.technicaltest.domain.port.inbound.SchedulingInboundPort;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +27,11 @@ import static java.time.temporal.ChronoUnit.MILLIS;
 public class SchedulingController {
 
     private final SchedulingInboundPort schedulingInboundPort;
+    private final FieldsValidator fieldsValidator;
 
-    public SchedulingController(SchedulingInboundPort schedulingInboundPort) {
+    public SchedulingController(SchedulingInboundPort schedulingInboundPort, FieldsValidator fieldsValidator) {
         this.schedulingInboundPort = schedulingInboundPort;
+        this.fieldsValidator = fieldsValidator;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

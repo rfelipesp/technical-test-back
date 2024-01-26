@@ -1,4 +1,4 @@
-package com.tokio.technicaltest.app.utils;
+package com.tokio.technicaltest.app.commons.utils;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
