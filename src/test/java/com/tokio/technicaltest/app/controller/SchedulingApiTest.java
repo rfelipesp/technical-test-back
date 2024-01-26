@@ -12,6 +12,7 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -114,5 +115,24 @@ public class SchedulingApiTest {
 //                .statusCode(200);
 //
 //    }
+
+    @Test
+    void giveAUuid_whenProcessCancelSchedules_thenReturnSuccess() {
+
+        String uuid = "/843417d2-809c-4fb2-aa08-584e521815e2";
+
+        doNothing().when(schedulingInboundPortMock).deleteScheduling(any());
+
+        given()
+                .port(port)
+                .contentType("application/json")
+                .when()
+                .delete("/tokio/scheduler" + uuid)
+                .then()
+                .body("message", equalTo("Scheduling canceled with success"))
+                .body("data.size()", equalTo(0))
+                .statusCode(200);
+
+    }
 
 }
