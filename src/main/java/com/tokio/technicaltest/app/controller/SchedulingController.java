@@ -114,4 +114,30 @@ public class SchedulingController {
 
     }
 
+    @GetMapping(value = "/{uuid}")
+    public ResponseEntity<ApiResponse<SchedulingRequestAndResponse>> getOneScheduling(@PathVariable final UUID uuid) {
+
+        final var start = now();
+        log.info("status={}", STARTED);
+
+        Response<SchedulingRequestAndResponse> response = new Response<>();
+
+        try {
+
+            var scheduling = SchedulingRequestMapper.fromSchedulingToScheduleResponse(
+                    schedulingInboundPort.getOneScheduling(uuid)
+            );
+
+            log.info("status={}, timeMillis={} ", FINISHED, start.until(now(), MILLIS));
+            return new ResponseEntity<>(response.ofSuccess(List.of(scheduling), "Success"), HttpStatus.OK);
+
+        } catch (Exception exception) {
+
+            log.error("status={}, cause={}, timeMillis={}", FAILED, exception.getMessage(), start.until(now(), MILLIS));
+            return new ResponseEntity<>(response.ofError(exception.getMessage()), HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
 }

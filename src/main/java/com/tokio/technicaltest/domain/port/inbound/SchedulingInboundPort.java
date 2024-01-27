@@ -1,5 +1,6 @@
 package com.tokio.technicaltest.domain.port.inbound;
 
+import com.tokio.technicaltest.app.dto.SchedulingRequestAndResponse;
 import com.tokio.technicaltest.domain.model.Scheduling;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface SchedulingInboundPort {
     Scheduling saveScheduling(Scheduling scheduling);
 
     void deleteScheduling(UUID uuid);
+
+    Scheduling getOneScheduling(UUID uuid);
+
 }

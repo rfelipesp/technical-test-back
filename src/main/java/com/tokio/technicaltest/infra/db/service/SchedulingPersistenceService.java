@@ -109,4 +109,26 @@ public class SchedulingPersistenceService implements SchedulingPersistencePort {
 
     }
 
+    @Override
+    public Scheduling retrieveOneScheduling(UUID uuid)throws IllegalStateException {
+
+        final var start = now();
+        log.info("status={}", STARTED);
+
+        try {
+
+            var optionalScheduling = schedulingRepository.findById(uuid);
+            if (optionalScheduling.isEmpty()){
+                throw new IllegalStateException("Scheduling not found");
+            }
+
+            return SchedulingEntityMapper.fromSchedulingEntityToSchedule(optionalScheduling.get());
+
+        } catch (Exception exception) {
+            log.error("status={}, timeMillis={} ", FAILED, start.until(now(), MILLIS));
+            throw new IllegalStateException(exception.getMessage());
+        }
+
+    }
+
 }

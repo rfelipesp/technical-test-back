@@ -2,10 +2,10 @@ package com.tokio.technicaltest.domain.utils;
 
 public enum TransferStatus {
 
-    SCHEDULED("scheduled"),
-    WAITING("waiting"),
-    PROCESSED("processed"),
-    CANCELED("canceled"),
+    SCHEDULED("AGENDADA"),
+    WAITING("AGUARDANDO"),
+    PROCESSED("PROCESSADA"),
+    CANCELED("CANCELADA"),
     ;
 
     private final String status;

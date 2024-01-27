@@ -15,5 +15,5 @@ public interface SchedulingPersistencePort {
 
     void deleteScheduling(Scheduling scheduling);
 
-
+    Scheduling retrieveOneScheduling(UUID uuid);
 }

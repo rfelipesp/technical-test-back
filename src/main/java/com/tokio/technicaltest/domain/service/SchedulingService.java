@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 @Service
 public class SchedulingService implements SchedulingInboundPort {
 
@@ -34,8 +36,8 @@ public class SchedulingService implements SchedulingInboundPort {
     public Scheduling saveScheduling(Scheduling scheduling) {
 
         var today = LocalDate.now();
-        var period = scheduling.getTransferDate().getDayOfYear() - today.getDayOfYear();
-        var transferRate = transferRateService.retrieveTransferRateByPeriod(period);
+        Long period = DAYS.between(LocalDate.now(), scheduling.getTransferDate());
+        var transferRate = transferRateService.retrieveTransferRateByPeriod(period.intValue());
 
         if (Objects.isNull(transferRate.getId())) {
             return Scheduling.builder().build();
@@ -55,5 +57,10 @@ public class SchedulingService implements SchedulingInboundPort {
         var scheduling = schedulingPersistencePort.retrieveSchedulingById(uuid);
         scheduling.setTransferStatus(TransferStatus.CANCELED);
         schedulingPersistencePort.deleteScheduling(scheduling);
+    }
+
+    @Override
+    public Scheduling getOneScheduling(UUID uuid) {
+        return schedulingPersistencePort.retrieveOneScheduling(uuid);
     }
 }

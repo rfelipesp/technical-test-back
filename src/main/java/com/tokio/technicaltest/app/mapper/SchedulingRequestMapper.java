@@ -52,6 +52,7 @@ public class SchedulingRequestMapper {
                 .transferRate(scheduling.getTransferRate().getTransferRate())
                 .transferDate(scheduling.getTransferDate())
                 .schedulingDate(scheduling.getSchedulingDate())
+                .status(scheduling.getTransferStatus().toString())
                 .build();
     }
 
