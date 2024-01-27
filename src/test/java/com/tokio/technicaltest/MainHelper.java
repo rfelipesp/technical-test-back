@@ -3,6 +3,7 @@ package com.tokio.technicaltest;
 import com.tokio.technicaltest.app.dto.SchedulingRequestAndResponse;
 import com.tokio.technicaltest.domain.model.Scheduling;
 import com.tokio.technicaltest.domain.model.TransferRate;
+import com.tokio.technicaltest.domain.utils.TransferStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public interface MainHelper {
                 .transferRate(buildTransferRate())
                 .transferDate(LocalDate.of(2024, 1, 25))
                 .schedulingDate(LocalDate.of(2024, 1, 25))
+                .transferStatus(TransferStatus.SCHEDULED)
                 .build();
     }
 
