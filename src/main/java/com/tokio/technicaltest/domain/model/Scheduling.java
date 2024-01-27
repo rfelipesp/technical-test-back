@@ -1,9 +1,7 @@
 package com.tokio.technicaltest.domain.model;
 
 import com.tokio.technicaltest.domain.utils.TransferStatus;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,6 +10,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Scheduling {
 
     private UUID uuid;

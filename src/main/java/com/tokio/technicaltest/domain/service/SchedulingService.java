@@ -2,7 +2,7 @@ package com.tokio.technicaltest.domain.service;
 
 import com.tokio.technicaltest.domain.model.Scheduling;
 import com.tokio.technicaltest.domain.port.inbound.SchedulingInboundPort;
-import com.tokio.technicaltest.domain.port.outbound.SchedulePersistencePort;
+import com.tokio.technicaltest.domain.port.outbound.SchedulingPersistencePort;
 import com.tokio.technicaltest.domain.port.outbound.TransferRatePersistencePort;
 import com.tokio.technicaltest.domain.utils.TransferStatus;
 import jakarta.transaction.Transactional;
@@ -16,17 +16,17 @@ import java.util.UUID;
 @Service
 public class SchedulingService implements SchedulingInboundPort {
 
-    private final SchedulePersistencePort schedulePersistencePort;
+    private final SchedulingPersistencePort schedulingPersistencePort;
     private final TransferRateService transferRateService;
 
-    public SchedulingService(SchedulePersistencePort schedulePersistencePort, TransferRatePersistencePort transferRatePersistencePort, TransferRateService transferRateService) {
-        this.schedulePersistencePort = schedulePersistencePort;
+    public SchedulingService(SchedulingPersistencePort schedulingPersistencePort, TransferRatePersistencePort transferRatePersistencePort, TransferRateService transferRateService) {
+        this.schedulingPersistencePort = schedulingPersistencePort;
         this.transferRateService = transferRateService;
     }
 
     @Override
     public List<Scheduling> findSchedules() {
-        return schedulePersistencePort.retrieveAllSchedules();
+        return schedulingPersistencePort.retrieveAllSchedules();
     }
 
     @Transactional
@@ -44,7 +44,7 @@ public class SchedulingService implements SchedulingInboundPort {
         scheduling.setTransferRate(transferRate);
         scheduling.setSchedulingDate(today);
         scheduling.setTransferStatus(TransferStatus.SCHEDULED);
-        return schedulePersistencePort.saveScheduling(scheduling);
+        return schedulingPersistencePort.saveScheduling(scheduling);
 
     }
 
@@ -52,8 +52,8 @@ public class SchedulingService implements SchedulingInboundPort {
     @Override
     public void deleteScheduling(UUID uuid) {
 
-        var scheduling = schedulePersistencePort.retrieveSchedulingById(uuid);
+        var scheduling = schedulingPersistencePort.retrieveSchedulingById(uuid);
         scheduling.setTransferStatus(TransferStatus.CANCELED);
-        schedulePersistencePort.deleteScheduling(scheduling);
+        schedulingPersistencePort.deleteScheduling(scheduling);
     }
 }

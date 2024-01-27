@@ -6,13 +6,28 @@ import com.tokio.technicaltest.domain.model.TransferRate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public interface MainHelper {
 
-    static Scheduling buildScheduling(){
+    static Scheduling buildScheduling() {
 
-        var transferRate = TransferRate.builder()
+
+        return Scheduling.builder()
+                .uuid(UUID.fromString("f93bd959-2e22-40f3-8483-86f3c0dd6d4f"))
+                .originAccount(1000L)
+                .destinationAccount(1001L)
+                .transferAmount(new BigDecimal("100.00"))
+                .transferRate(buildTransferRate())
+                .transferDate(LocalDate.of(2024, 1, 25))
+                .schedulingDate(LocalDate.of(2024, 1, 25))
+                .build();
+    }
+
+    static TransferRate buildTransferRate() {
+
+        return TransferRate.builder()
                 .id(1L)
                 .fromDay(0)
                 .untilDay(0)
@@ -20,18 +35,9 @@ public interface MainHelper {
                 .status(true)
                 .build();
 
-        return Scheduling.builder()
-                .uuid(UUID.fromString("f93bd959-2e22-40f3-8483-86f3c0dd6d4f"))
-                .originAccount(1000L)
-                .destinationAccount(1001L)
-                .transferAmount(new BigDecimal("100.00"))
-                .transferRate(transferRate)
-                .transferDate(LocalDate.of(2024, 1, 25))
-                .schedulingDate(LocalDate.of(2024, 1, 25))
-                .build();
     }
 
-    static SchedulingRequestAndResponse buildSchedulingRequest(){
+    static SchedulingRequestAndResponse buildSchedulingRequest() {
 
         return SchedulingRequestAndResponse.builder()
                 .uuid(UUID.fromString("f93bd959-2e22-40f3-8483-86f3c0dd6d4f"))
@@ -43,4 +49,7 @@ public interface MainHelper {
     }
 
 
+    static List<TransferRate> buildTransferRateList() {
+        return List.of(buildTransferRate());
+    }
 }

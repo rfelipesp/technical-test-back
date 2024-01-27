@@ -5,7 +5,7 @@ import com.tokio.technicaltest.domain.model.Scheduling;
 import java.util.List;
 import java.util.UUID;
 
-public interface SchedulePersistencePort {
+public interface SchedulingPersistencePort {
 
     List<Scheduling> retrieveAllSchedules();
 

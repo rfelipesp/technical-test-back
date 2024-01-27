@@ -1,7 +1,7 @@
 package com.tokio.technicaltest.infra.db.service;
 
 import com.tokio.technicaltest.domain.model.Scheduling;
-import com.tokio.technicaltest.domain.port.outbound.SchedulePersistencePort;
+import com.tokio.technicaltest.domain.port.outbound.SchedulingPersistencePort;
 import com.tokio.technicaltest.infra.db.entity.SchedulingEntity;
 import com.tokio.technicaltest.infra.db.repository.SchedulingRepository;
 import com.tokio.technicaltest.infra.mapper.SchedulingEntityMapper;
@@ -17,11 +17,11 @@ import static java.time.temporal.ChronoUnit.MILLIS;
 
 @Slf4j
 @Component
-public class SchedulePersistenceService implements SchedulePersistencePort {
+public class SchedulingPersistenceService implements SchedulingPersistencePort {
 
     private final SchedulingRepository schedulingRepository;
 
-    public SchedulePersistenceService(SchedulingRepository schedulingRepository) {
+    public SchedulingPersistenceService(SchedulingRepository schedulingRepository) {
         this.schedulingRepository = schedulingRepository;
     }
 

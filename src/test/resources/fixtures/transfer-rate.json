@@ -1,0 +1,9 @@
+[
+  {
+    "id": "1",
+    "fromDay": "0",
+    "untilDay": "10",
+    "transferRate": "2.5",
+    "status": "true"
+  }
+]
