@@ -95,26 +95,25 @@ public class SchedulingApiTest {
 
     }
 
-//    @Test
-//    void giveAnInValidRequest_whenProcessSchedules_thenReturnSuccess() {
-//
-//        var request = MainHelper.buildSchedulingRequest();
-//        request.setTransferDate(null);
-//
-//        when(schedulingInboundPortMock.saveScheduling(any())).thenReturn(MainHelper.buildScheduling());
-//
-//        given()
-//                .port(port)
-//                .contentType("application/json")
-//                .body(request)
-//                .when()
-//                .post("/tokio/scheduler")
-//                .then()
-//                .body("message", equalTo("Some problem when try save scheduling"))
-//                .body("data.size()", equalTo(0))
-//                .statusCode(200);
-//
-//    }
+    @Test
+    void giveAnInValidRequest_whenProcessSchedules_thenReturnSuccess() {
+
+        var request = MainHelper.buildSchedulingRequest();
+        request.setTransferDate(null);
+
+        when(schedulingInboundPortMock.saveScheduling(any())).thenReturn(MainHelper.buildScheduling());
+
+        given()
+                .port(port)
+                .contentType("application/json")
+                .body(request)
+                .when()
+                .post("/tokio/scheduler")
+                .then()
+                .body("errors.transferDate", equalTo("A data de transferência deve ser informada"))
+                .statusCode(400);
+
+    }
 
     @Test
     void giveAUuid_whenProcessCancelSchedules_thenReturnSuccess() {
